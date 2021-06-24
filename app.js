@@ -7,6 +7,8 @@ const mainRoutes = require("./routes/main");
 const loginRoutes = require("./routes/login");
 const gameRoutes = require("./routes/game");
 
+app.use(express.static("public"));
+
 app.use(mainRoutes);
 
 app.use(loginRoutes);
