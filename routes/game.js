@@ -3,7 +3,12 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/game", (req, res, next) => {
-  res.render("game");
+  const title = "Game";
+  const style = "game.css";
+  res.render("layouts/game", {
+    title,
+    style,
+  });
 });
 
 module.exports = router;

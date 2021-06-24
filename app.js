@@ -6,6 +6,7 @@ const port = 3000;
 const mainRoutes = require("./routes/main");
 const loginRoutes = require("./routes/login");
 const gameRoutes = require("./routes/game");
+const { title } = require("process");
 
 app.set("view engine", "ejs");
 
@@ -18,7 +19,12 @@ app.use(loginRoutes);
 app.use(gameRoutes);
 
 app.use((req, res, next) => {
-  res.status(404).render("404");
+  const title = "Page Not Found";
+  const style = "404.css";
+  res.status(404).render("layouts/404", {
+    title,
+    style,
+  });
 });
 
 app.listen(port, () => {
