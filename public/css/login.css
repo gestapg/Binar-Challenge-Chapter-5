@@ -1,0 +1,19 @@
+.layout {
+  height: 100vh;
+  align-items: center;
+}
+
+.form__bg {
+  width: 25rem;
+  height: 25rem;
+  border-radius: 10px;
+  padding: 0 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+button {
+  width: fit-content;
+  margin: 0 auto;
+}
