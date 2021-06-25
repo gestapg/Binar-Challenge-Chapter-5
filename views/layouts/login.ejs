@@ -1,0 +1,22 @@
+<%- include("../includes/header.ejs") %>
+  </head>
+  <body>
+      <!-- ===== Navbar ===== -->
+      <%- include("../includes/nav.ejs") %>
+      <!-- ===== End of Navbar ===== -->
+    <div class="layout container-fluid d-flex">
+      <form class="form__bg bg-light mx-auto shadow" action="/login" method="POST">
+        <h3 class="mx-auto mb-3">Welcome!</h3>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" />
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+          <label for="floatingPassword">Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+
+    <%- include("../includes/footer.ejs") %>
