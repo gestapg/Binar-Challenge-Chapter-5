@@ -1,11 +1,11 @@
 const express = require("express");
+const { body, validationResult } = require("express-validator");
 const router = express.Router();
 
 const fs = require("fs");
 const path = require("path");
 
-const pathFile = path.join(path.dirname(process.mainModule.filename), "data", "user.json");
-const pathDir = path.join(path.dirname(process.mainModule.filename), "data");
+const User = require("../models/user");
 
 router.get("/login", (req, res, next) => {
   const title = "Login";
@@ -13,19 +13,39 @@ router.get("/login", (req, res, next) => {
   res.render("layouts/login", { title, style });
 });
 
-router.post("/login", (req, res, next) => {
-  const data = req.body;
-  fs.readFile(pathFile, (err, user) => {
-    let dataUser = [];
-    if (err) {
-      fs.mkdir(pathDir, (err) => {});
+router.post(
+  "/login",
+  [
+    body("userName").custom((value) => {
+      const duplicate = User.duplicateCheckUserName(value);
+      if (!duplicate) {
+        throw new Error("Invalid Username, Please sign up first!");
+      }
+      return true;
+    }),
+    body("email").custom((value) => {
+      const duplicate = User.duplicateCheckEmail(value);
+      if (!duplicate) {
+        throw new Error("Invalid Email, Please sign up first!");
+      }
+      return true;
+    }),
+    body("password").custom((value) => {
+      const duplicate = User.duplicateCheckPassword(value);
+      if (!duplicate) {
+        throw new Error("Invalid Password");
+      }
+      return true;
+    }),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render("layouts/login", { title: "Login", style: "login.css", errors: errors.array() });
     } else {
-      dataUser = JSON.parse(user);
+      res.redirect(`/game`);
     }
-    dataUser.push(data);
-    fs.writeFile(pathFile, JSON.stringify(dataUser), (err) => {});
-  });
-  res.redirect("/game");
-});
+  }
+);
 
 module.exports = router;
